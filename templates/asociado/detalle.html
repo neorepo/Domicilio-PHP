@@ -1,0 +1,70 @@
+<h1 class="h2 text-center">
+    <?= $asociado->getApellido() . ' ' . $asociado->getNombre(); ?>
+</h1>
+<table class="table table-sm table-bordered">
+    <tr>
+        <th>Fecha de Registro</th>
+        <td><?php echo $asociado->getCreated()->format('d/m/Y H:i'); ?></td>
+    </tr>
+    <tr>
+        <th>Documento</th>
+        <td><?php echo $asociado->getTipoDocumento() . ' - ' . $asociado->getNumDocumento(); ?></td>
+    </tr>
+    <tr>
+        <th>Cuil</th>
+        <td><?php echo $asociado->getNumCuil(); ?></td>
+    </tr>
+    <tr>
+        <th>Fecha de Nacimiento</th>
+        <td><?php echo $asociado->getFechaNacimiento()->format('d/m/Y'); ?></td>
+    </tr>
+    <tr>
+        <th>Sexo</th>
+        <td><?php echo $asociado->getSexo(); ?></td>
+    </tr>
+    <tr>
+        <th>Correo Electrónico</th>
+        <td><?php echo $asociado->getEmail(); ?></td>
+    </tr>
+    <tr>
+        <th>Condición de Ingreso</th>
+        <td><?php echo $asociado->getCondicionIngreso(); ?></td>
+    </tr>
+    <tr>
+        <th>Domicilio</th>
+        <td><?php echo $asociado->getEstaDomiciliadoEn()->getCalle() . ' ' . $asociado->getEstaDomiciliadoEn()->getNumero(); ?>
+        </td>
+    </tr>
+    <tr>
+        <th>Última Modificación</th>
+        <td><?php echo $asociado->getLastModified()->format('d/m/Y H:i'); ?></td>
+    </tr>
+    <tr>
+        <td colspan="2">&nbsp;</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>
+            <div class="actions">
+                <a href="https://example.com/asociado/edit/<?= $asociado->getId(); ?>"><i
+                        class="material-icons">edit</i></a>
+                <a href="https://example.com/asociado/delete/<?= $asociado->getId(); ?>" id="delete-link"><i
+                        class="material-icons">delete</i></a>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<p>
+    <a href="#"><i class="material-icons align-bottom">fast_rewind</i> A la lista</a>
+</p>
+
+<div class="backdrop">
+    <div class="dialog">
+        <p>¿Desea eliminar el registro?</p>
+        <div style="display:flex;justify-content: center;">
+            <button style="margin-right: .25rem" id="ok">Aceptar</button>
+            <button style="margin-left: .25rem" id="cancel">Cancelar</button>
+        </div>
+    </div>
+</div>
