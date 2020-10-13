@@ -1,0 +1,21 @@
+*:active,*:hover,*:focus {
+    outline: none;
+    box-shadow: none !important;
+}
+
+label {
+    margin-bottom: .25rem;
+}
+
+.form-control:disabled, .form-control[readonly] {
+    background-color: #fff;
+    opacity: 1;
+}
+
+body {
+    background-color: #f5f5f5;
+}
+
+form .material-icons {
+    font-size: 18px;
+}
