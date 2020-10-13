@@ -24,10 +24,16 @@ class Db {
         }
     }
 
+    /**
+     * Devuelve la instancia de la clase PDO
+     */
     private function getDb() {
         return $this->db;
     }
 
+    /**
+     * Devuelve una instancia de la clase
+     */
     public static function getInstance() {
         if (!self::$instance instanceof self) {
             self::$instance = new self;
@@ -35,6 +41,9 @@ class Db {
         return self::$instance->getDb();
     }
 
+    /**
+     * 
+     */
     public static function query(/* $sql [, ... ] */) {
         // SQL statement
         $sql = func_get_arg(0);
