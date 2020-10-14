@@ -1,16 +1,12 @@
 <?php
 
 /**
- * Singleton
+ * Pseudo - Singleton
  */
-class Db {
+final class Db {
 
     private $db;
     private static $instance = null;
-
-    public function __destruct() {
-        $this->db = null;
-    }
 
     private function __construct() {
         $config = Config::getConfig('sqlitedb');
@@ -25,20 +21,36 @@ class Db {
     }
 
     /**
-     * Devuelve la instancia de la clase PDO
+     * El método getDb no puede ser static porque no será llamado desde fuera de la clase Db.
+     * todo sera gestionado por el método estático getInstance() el cual será llamado desde fuera.
      */
     private function getDb() {
         return $this->db;
     }
 
     /**
-     * Devuelve una instancia de la clase
+     * Crea un instancia de la clase Db y
+     * Retorna una instancia de la clase PDO
      */
     public static function getInstance() {
         if (!self::$instance instanceof self) {
             self::$instance = new self;
         }
         return self::$instance->getDb();
+    }
+
+    // Magic method clone is empty to prevent duplication of connection
+    private function __clone() {
+        trigger_error('Clone is not allowed.', E_USER_ERROR);
+    }
+
+    // https://www.php.net/manual/es/language.oop5.magic.php
+    public function __wakeup() {
+        trigger_error('Deserializing is not allowed.', E_USER_ERROR);
+    }
+
+    public function __destruct() {
+        $this->db = null;
     }
 
     /**
