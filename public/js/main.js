@@ -5,10 +5,10 @@ const localidadEl = document.querySelector('#localidad');
 
 document.addEventListener('DOMContentLoaded', () => {
     initDatepicker();
-    initOnchangeProvincia();
+    initChangeProvince();
 });
 
-function initOnchangeProvincia() {
+function initChangeProvince() {
     if (!provinciaEl && !localidadEl) {
         return;
     }

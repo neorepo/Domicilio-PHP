@@ -65,6 +65,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 // $countries = getAllContries();
 
+// var_dump($countries);
+
 $template = '../templates/asociado/registro.html';
 
 require_once '../templates/index.html';
