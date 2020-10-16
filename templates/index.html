@@ -18,17 +18,69 @@
     <title>Domicilio</title>
 
     <link rel="stylesheet" href="./css/main.css">
+
+    <style>
+        .error {
+            color: #900;
+        }
+
+        .success {
+            color: #007a00;
+        }
+
+        .error input {
+            border: 3px solid #900;
+        }
+
+        .success input {
+            border: 3px solid #007a00;
+        }
+    </style>
 </head>
 
 <body>
     <!-- <select name="" id="output"></select> -->
-    <header></header>
+    <header class="container">
+        <h1>Casa del Maestro y Previsión Social</h1>
+    </header>
 
-    <main class="container my-5">
+    <nav class="navbar navbar-expand-md navbar-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="img/logo-cdm0-edit.png" alt="" height="36" width="36">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+                aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="index.php">Inicio <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Usuarios</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">Asociados</a>
+                        <div class="dropdown-menu" aria-labelledby="dropdown01">
+                            <a class="dropdown-item" href="">Listar</a>
+                            <a class="dropdown-item" href="add.php">Registrar</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container my-3">
         <?php require_once $template; ?>
     </main>
 
-    <footer></footer>
+    <footer class="container">
+        <p>© Casa del Maestro y Previsión Social.</p>
+    </footer>
 
 
     <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
