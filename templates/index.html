@@ -40,13 +40,13 @@
 
 <body>
     <!-- <select name="" id="output"></select> -->
-    <header class="container">
+    <header class="container" style="color: #0078D7;">
         <h1>Casa del Maestro y Previsión Social</h1>
     </header>
 
     <nav class="navbar navbar-expand-md navbar-light">
         <div class="container">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="index.php">
                 <img src="img/logo-cdm0-edit.png" alt="" height="36" width="36">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
@@ -59,22 +59,33 @@
                         <a class="nav-link" href="index.php">Inicio <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Usuarios</a>
+                        <a class="nav-link" href="#">Nuestra mutual</a>
                     </li>
-                    <li class="nav-item dropdown">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contacto</a>
+                    </li>
+
+                    <!-- <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">Asociados</a>
                         <div class="dropdown-menu" aria-labelledby="dropdown01">
                             <a class="dropdown-item" href="">Listar</a>
                             <a class="dropdown-item" href="add.php">Registrar</a>
                         </div>
+                    </li> -->
+
+                </ul>
+
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="login.php">Ingresar</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <main class="container my-3">
+    <main class="container my-4">
         <?php require_once $template; ?>
     </main>
 

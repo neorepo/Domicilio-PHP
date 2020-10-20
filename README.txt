@@ -139,10 +139,7 @@ vocales con diéresis
 INFORMACIÓN ACERCA DE LAS LOCALIDADES DE LA BASE DE DATOS
 22826 localidades, última actualización 24/09/2020 10:30
 
-neodrive.edu
-neo.repo.edu
-neo.code.edu
-cloud.storage.edu
+
 // $a = 1;
 // $b = !!$a;
 // var_dump( ~$a ); -2

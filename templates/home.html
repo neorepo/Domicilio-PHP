@@ -9,8 +9,8 @@
     <form method="post" action="#">
         <div>
             <label for="ex1_username"><strong></strong> Username:</label>
-            <input type="text" name="username" id="ex1_username" />
-            <span id="username_feedback" aria-live="polite"></span>
+            <input type="text" name="username" id="ex1_username" class="form-control">
+            <span id="invalid-feedback" aria-live="polite"></span>
         </div>
     </form>
     </p>
@@ -99,12 +99,14 @@
     function setError(el, msg) {
         // el.parentNode.querySelector('strong').innerHTML = "Error:";
         el.parentNode.className = 'error';
+        el.classList.add('is-invalid');
         el.parentNode.querySelector('span').innerHTML = msg;
     }
 
     function setSuccess(el) {
         // el.parentNode.querySelector('strong').innerHTML = "OK:";
         el.parentNode.className = 'success';
+        el.classList.remove('is-invalid');
         el.parentNode.querySelector('span').innerHTML = "&check;";
     }
 
@@ -117,8 +119,8 @@
                 setSuccess(this, '&check; You can use this username.');
             }
         } else {
-            document.getElementById('username_feedback').innerHTML = '';
-            document.getElementById('username_feedback').parentNode.className = '';
+            document.getElementById('invalid-feedback').innerHTML = '';
+            document.getElementById('invalid-feedback').parentNode.className = '';
             document.querySelector('[for="ex1_username"] strong').innerHTML = '';
         }
     });

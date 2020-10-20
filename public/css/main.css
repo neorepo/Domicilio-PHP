@@ -19,3 +19,16 @@ body {
 form .material-icons {
     font-size: 18px;
 }
+
+.invalid-feedback {
+    display: block;
+    visibility: hidden;
+    height: 19.2px;
+}
+
+.is-invalid~.invalid-feedback,
+.is-invalid~.invalid-tooltip,
+.was-validated :invalid~.invalid-feedback,
+.was-validated :invalid~.invalid-tooltip {
+    visibility: visible;
+}
