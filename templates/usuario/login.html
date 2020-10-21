@@ -1,5 +1,5 @@
 <h2 class="mb-4 h3">Ingresá tus datos</h2>
-<form method="post" action="#">
+<form method="" action="#" name="login">
 
     <div class="form-group">
         <label for="username">Usuario:</label>
@@ -8,7 +8,7 @@
     </div>
     <div class="form-group">
         <label for="password">Contraseña:</label>
-        <input type="password" name="contraseña" id="password" class="form-control">
+        <input type="password" name="password" id="password" class="form-control">
         <span class="invalid-feedback"></span>
     </div>
 
@@ -30,4 +30,22 @@
             document.getElementById("back-link").setAttribute("href", document.referrer);
         }
     })();
+
+    /*
+    const username = document.querySelector("#username");
+    const password = document.querySelector("#password");
+
+    const form = document.login;
+
+    form.onsubmit = function (e) {
+        let val1 = username.name + "=" + encodeURIComponent(username.value);
+        let val2 = password.name + "=" + encodeURIComponent(password.value);
+        const formData = val1 + "&" + val2;
+        console.log("Datos de formulario\n" + formData);
+        return false;
+    }
+    
+    Datos de formulario
+    usuario=Neo&password=Abc123
+    */
 </script>

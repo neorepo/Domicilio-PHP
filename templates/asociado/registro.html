@@ -1,26 +1,27 @@
-<section style="/*width: 100%;max-width: 420px;margin: auto;padding: 1rem;*/">
+<section style="width: 100%;max-width: 750px;margin: auto;padding: 1rem;">
 
-    <div class="mb-4">
+    <div class="mb-4 text-center">
         <h2 class="h3">Registro de Asociado</h1>
     </div>
 
     <form action="" method="post">
 
+        <!-- Datos personales -->
         <fieldset>
             <legend class="mb-3">Datos personales</legend>
-            <div class="form-row">
-                <div class="col-md-6 mb-3">
-                    <label for="apellido">Apellidos *</label>
-                    <input type="text" name="apellido" id="apellido" class="form-control" value="" spellcheck="false"
-                        autocomplete="off" autocorrect="off" autocapitalize="off" maxlength="40">
-                    <div class="invalid-feedback"></div>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label for="nombre">Nombres *</label>
-                    <input type="text" name="nombre" id="nombre" class="form-control" value="" spellcheck="false"
-                        autocomplete="off" autocorrect="off" autocapitalize="off" maxlength="40">
-                    <div class="invalid-feedback"></div>
-                </div>
+
+            <div class="form-group">
+                <label for="apellido">Apellidos *</label>
+                <input type="text" name="apellido" id="apellido" class="form-control" value="" spellcheck="false"
+                    autocomplete="off" autocorrect="off" autocapitalize="off" maxlength="40">
+                <div class="invalid-feedback"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="nombre">Nombres *</label>
+                <input type="text" name="nombre" id="nombre" class="form-control" value="" spellcheck="false"
+                    autocomplete="off" autocorrect="off" autocapitalize="off" maxlength="40">
+                <div class="invalid-feedback"></div>
             </div>
 
             <!-- <div class="form-group">
@@ -50,48 +51,48 @@
                 <div class="invalid-feedback"></div>
             </div>
 
+            <!-- Fecha de nacimiento -->
             <div class="form-group">
-                <label for="fecha-nacimiento">Fecha de nacimiento *</label>
+                <label>Fecha de nacimiento *</label>
 
                 <div class="form-row">
 
-                    <!-- <div class="col-md-4"> -->
-                    <select name="birthday_day" id="birthday-day"
-                        class="custom-select <?= isset( $errors['fecha_nacimiento'] ) ? 'is-invalid' : ''; ?>">
-                        <option value="0" disabled>Día</option>
-                        <?php for($dia = 1; $dia <= 31; $dia++): ?>
-                        <option value="<?= $dia; ?>"><?= $dia; ?></option>
-                        <?php endfor; ?>
-                    </select>
-                    <!-- </div> -->
-                    <!-- <div class="col-md-4"> -->
-                    <select name="birthday_month" id="birthday-month"
-                        class="custom-select <?= isset( $errors['fecha_nacimiento'] ) ? 'is-invalid' : ''; ?>">
-                        <option value="0" disabled>Mes</option>
-                        <?php
+                    <div class="col-md-4">
+                        <select name="birthday_day" id="birthday-day"
+                            class="custom-select <?= isset( $errors['fecha_nacimiento'] ) ? 'is-invalid' : ''; ?>">
+                            <option value="0" disabled>Día</option>
+                            <?php for($dia = 1; $dia <= 31; $dia++): ?>
+                            <option value="<?= $dia; ?>"><?= $dia; ?></option>
+                            <?php endfor; ?>
+                        </select>
+                        <div class="invalid-feedback"><?php echo $errors['fecha_nacimiento'] ?? ''; ?></div>
+                    </div>
+                    <div class="col-md-4">
+                        <select name="birthday_month" id="birthday-month"
+                            class="custom-select <?= isset( $errors['fecha_nacimiento'] ) ? 'is-invalid' : ''; ?>">
+                            <option value="0" disabled>Mes</option>
+                            <?php
                             $meses = [1 => 'ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
                             for($mes = 1; $mes <= 12; $mes++): ?>
-                        <option value="<?= $mes; ?>"><?= $meses[$mes]; ?></option>
-                        <?php endfor; ?>
-                    </select>
-                    <!-- </div> -->
-                    <!-- <div class="col-md-4"> -->
-                    <select name="birthday_year" id="birthday-year"
-                        class="custom-select <?= isset( $errors['fecha_nacimiento'] ) ? 'is-invalid' : ''; ?>">
-                        <option value="0" disabled>Año</option>
-                        <?php
+                            <option value="<?= $mes; ?>"><?= $meses[$mes]; ?></option>
+                            <?php endfor; ?>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <select name="birthday_year" id="birthday-year"
+                            class="custom-select <?= isset( $errors['fecha_nacimiento'] ) ? 'is-invalid' : ''; ?>">
+                            <option value="0" disabled>Año</option>
+                            <?php
                             $anioActual = date('Y');
                             for($anio = $anioActual; $anio >= 1905; $anio--): ?>
-                        <option value="<?= $anio; ?>"><?= $anio; ?></option>
-                        <?php endfor; ?>
-                    </select>
-                    <!-- </div> -->
-                </div>
-                <div class="invalid-feedback">
-                    <div style="width: 100%;margin-top: .25rem;font-size: 80%;color: #dc3545;">
-                        <?php echo $errors['fecha_nacimiento'] ?? ''; ?>
+                            <option value="<?= $anio; ?>"><?= $anio; ?></option>
+                            <?php endfor; ?>
+                        </select>
                     </div>
                 </div>
+
+                <!-- <div style="width: 100%;margin-top: .25rem;font-size: 80%;color: #dc3545;"></div> -->
+
             </div>
 
             <div class="form-group">
@@ -156,9 +157,10 @@
 
         <hr class="mb-4">
 
+        <!-- Domicilio -->
         <fieldset>
             <legend class="mb-3">Domicilio</legend>
-            <p>Solo complete los campos que se correspondan con su domicilio.</p>
+            <p>Complete los campos que se correspondan con su domicilio.</p>
 
             <div class="form-group">
                 <label for="calle">Calle</label>
@@ -166,7 +168,7 @@
                 <div class="invalid-feedback"></div>
             </div>
 
-            <div class="row">
+            <div class="form-row">
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="numero">Número</label>
@@ -227,7 +229,7 @@
                 <div class="invalid-feedback"></div>
             </div>
 
-            <div class="form-group" style="display: none;" id="wrapper-localidad">
+            <div class="form-group" id="wrapper-localidad" style="display: none;">
                 <label for="localidad">Localidad *</label>
 
                 <select name="localidad" id="localidad" class="custom-select" aria-readonly="true">
@@ -239,7 +241,7 @@
 
         </fieldset>
 
-        <button type="submit" class="btn btn-primary mt-3">Guardar</button>
+        <button type="submit" class="btn btn-primary btn-lg mt-3">Guardar</button>
 
     </form>
 </section>
