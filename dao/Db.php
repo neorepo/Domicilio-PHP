@@ -5,7 +5,7 @@
  */
 final class Db {
 
-    private $db;
+    private $connection;
     private static $instance = null;
 
     private function __construct() {
@@ -13,7 +13,11 @@ final class Db {
         // SQLite: dsn => 'sqlite:../db/yourdatabase.sqlite/.db', username => '', password => ''
         // MySQL: dsn => 'mysql:host=localhost:dbname=yourdatabase;charset=utf8mb4', username => 'root', password => ''
         try {
-            $this->db = new PDO($config['dsn'], $config['username'], $config['password']);
+            $this->connection = new PDO($config['dsn'], $config['username'], $config['password'],[
+                PDO::ATTR_PERSISTENT => true,
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_EMULATE_PREPARES => false
+            ]);
         } catch (PDOException $e) {
             trigger_error('Could not connect to database: ' . $e->getMessage(), E_USER_ERROR);
             exit;
@@ -24,8 +28,8 @@ final class Db {
      * El método getDb no puede ser static porque no será llamado desde fuera de la clase Db.
      * todo sera gestionado por el método estático getInstance() el cual será llamado desde fuera.
      */
-    private function getDb() {
-        return $this->db;
+    private function getConnection() {
+        return $this->connection;
     }
 
     /**
@@ -36,7 +40,7 @@ final class Db {
         if (!self::$instance instanceof self) {
             self::$instance = new self;
         }
-        return self::$instance->getDb();
+        return self::$instance->getConnection();
     }
 
     // Magic method clone is empty to prevent duplication of connection
@@ -50,7 +54,7 @@ final class Db {
     }
 
     public function __destruct() {
-        $this->db = null;
+        $this->connection = null;
     }
 
     /**

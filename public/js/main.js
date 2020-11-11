@@ -95,6 +95,7 @@ function initDatepicker() {
             showMonthAfterYear: false,
             /*showWeek: true,
             weekHeader: "Sm",*/
-            yearRange: "1905:c"// or 1905:yy or 1905:new Date() or 1905:new Date().getFullYear()
+            //yearRange: "1905:c"// or 1905:yy or 1905:new Date() or 1905:new Date().getFullYear()
+            yearRange: '1905:' + new Date().getFullYear()
         });
 }

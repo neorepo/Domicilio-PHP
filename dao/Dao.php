@@ -34,13 +34,14 @@ abstract class Dao {
         return $this->db;
     }
 
-    protected abstract function insert(object $data);
+    // La teoría dice que deberían tener el modificador de acceso público
+    public abstract function insert(object $data);
 
-    protected abstract function findById($id);
+    public abstract function findById($id);
 
-    protected abstract function update(object $data);
+    public abstract function update(object $data);
 
-    protected abstract function delete($id);
+    public abstract function delete($id);
 
     /**
      * Executes SQL statement, possibly with parameters, returning

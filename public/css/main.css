@@ -5,22 +5,14 @@
 
 label {
     margin-bottom: .25rem;
-}
-
-.form-control:disabled, .form-control[readonly] {
-    background-color: #fff;
-    opacity: 1;
-}
-
-body {
-    background-color: #f5f5f5;
+    font-weight: 600;
 }
 
 form .material-icons {
-    font-size: 18px;
+    font-size: 22px;
 }
 
-.invalid-feedback {
+/* .invalid-feedback {
     display: block;
     visibility: hidden;
     height: 19.2px;
@@ -31,10 +23,4 @@ form .material-icons {
 .was-validated :invalid~.invalid-feedback,
 .was-validated :invalid~.invalid-tooltip {
     visibility: visible;
-}
-
-.form-control, .custom-select {
-    height: calc(1.5em + 1rem + 2px);
-    padding: .5rem 1rem;
-    font-size: 1.25rem;
-}
+} */

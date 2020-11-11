@@ -24,13 +24,6 @@
                 <div class="invalid-feedback"></div>
             </div>
 
-            <!-- <div class="form-group">
-                <label for="fecha-nacimiento">Fecha de nacimiento (dd/mm/aaaa) *</label>
-                <input type="text" name="fecha_nacimiento" id="fecha-nacimiento" class="form-control datepicker"
-                    value="" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off">
-                <div class="invalid-feedback"></div>
-            </div> -->
-
             <div class="form-group">
                 <label for="tipo-documento">Tipo de documento *</label>
                 <select name="tipo_documento" id="tipo-documento" class="custom-select">
@@ -48,6 +41,15 @@
                 <input type="text" name="num_documento" id="num-documento" class="form-control" data-toggle="tooltip"
                     data-placement="left" title="Completar con ceros a la izquierda si es necesario" value=""
                     spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off">
+                <div class="invalid-feedback"></div>
+            </div>
+
+            <!-- Fecha de nacimiento Datepicker -->
+            <div class="form-group">
+                <!-- style="background-color: #fff;opacity: 1;" -->
+                <label for="fecha-nacimiento">Fecha de nacimiento (dd/mm/aaaa) *</label>
+                <input type="text" name="fecha_nacimiento" id="fecha-nacimiento" class="form-control datepicker"
+                    value="" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off">
                 <div class="invalid-feedback"></div>
             </div>
 
@@ -106,7 +108,7 @@
             </div>
 
             <div class="form-group">
-                <label for="condicion-ingreso">Situación de ingreso *</label>
+                <label for="condicion-ingreso">Condición de ingreso *</label>
                 <select name="condicion_ingreso" id="condicion-ingreso" class="custom-select">
                     <option value="0">- Seleccionar -</option>
                     <option value="ACTIVO">ACTIVO</option>
@@ -159,8 +161,8 @@
 
         <!-- Domicilio -->
         <fieldset>
-            <legend class="mb-3">Domicilio</legend>
-            <p>Complete los campos que se correspondan con su domicilio.</p>
+            <legend class="mb-3">Datos del domicilio</legend>
+            <!-- <p>Complete los campos que se correspondan con su domicilio.</p> -->
 
             <div class="form-group">
                 <label for="calle">Calle</label>

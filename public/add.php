@@ -20,9 +20,9 @@ $domicilio = null;
 
 $errors = [];
 
-$birthday_day = date('j');
-$birthday_month = date('n');
 $birthday_year = date('Y');
+$birthday_month = date('n');
+$birthday_day = date('j');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -63,15 +63,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // var_dump($domicilio);
 }
 
-// $countries = getAllContries();
+// $countries = getAllCountries();
 
 // var_dump($countries);
-
+// $template = '../templates/xmlhttprequest.html';
 $template = '../templates/asociado/registro.html';
 
-require_once '../templates/index.html';
+require_once '../templates/base.html';
 
-function getAllContries() {
+function getAllCountries() {
     return Db::query('SELECT * FROM pais;');
 }
 
@@ -114,7 +114,6 @@ function validarFecha($day, $month, $year) {
 }
 
 function isLeapYear($year) {
-    $isLeapYear = false;
     // divisible by 4
     $isLeapYear = ($year % 4 == 0);
     // divisible by 4 and not 100

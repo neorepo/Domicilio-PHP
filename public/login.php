@@ -8,4 +8,4 @@ date_default_timezone_set('AMERICA/ARGENTINA/BUENOS_AIRES');
 
 $template = '../templates/usuario/login.html';
 
-require_once '../templates/index.html';
+require_once '../templates/base.html';
