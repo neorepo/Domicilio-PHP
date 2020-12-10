@@ -1,32 +1,36 @@
 <section style="width: 100%;max-width: 750px;margin: auto;padding: 1rem;">
 
     <div class="mb-4 text-center">
-        <h2 class="h3">Registro de Asociado</h1>
+        <h2 class="h3">Registro de Asociado</h2>
     </div>
 
+    <!-- Formulario de alta de ASOCIADO -->
     <form action="" method="post">
 
         <!-- Datos personales -->
         <fieldset>
             <legend class="mb-3">Datos personales</legend>
 
+            <!-- Apellido -->
             <div class="form-group">
                 <label for="apellido">Apellidos *</label>
-                <input type="text" name="apellido" id="apellido" class="form-control" value="" spellcheck="false"
-                    autocomplete="off" autocorrect="off" autocapitalize="off" maxlength="40">
+                <input type="text" name="asociado[apellido]" id="apellido" class="form-control" value=""
+                    spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off" maxlength="40">
                 <div class="invalid-feedback"></div>
             </div>
 
+            <!-- Nombre -->
             <div class="form-group">
                 <label for="nombre">Nombres *</label>
-                <input type="text" name="nombre" id="nombre" class="form-control" value="" spellcheck="false"
+                <input type="text" name="asociado[nombre]" id="nombre" class="form-control" value="" spellcheck="false"
                     autocomplete="off" autocorrect="off" autocapitalize="off" maxlength="40">
                 <div class="invalid-feedback"></div>
             </div>
 
+            <!-- Tipo de documento -->
             <div class="form-group">
                 <label for="tipo-documento">Tipo de documento *</label>
-                <select name="tipo_documento" id="tipo-documento" class="custom-select">
+                <select name="asociado[tipo_documento]" id="tipo-documento" class="custom-select">
                     <option value="0">- Seleccionar -</option>
                     <option value="DNI">DNI (Documento Nacional de Identidad)</option>
                     <option value="LC">LC (Libreta Cívica)</option>
@@ -36,11 +40,13 @@
                 <div class="invalid-feedback"></div>
             </div>
 
+            <!-- Número de documento -->
             <div class="form-group">
                 <label for="num-documento">Número de documento (ocho dígitos) *</label>
-                <input type="text" name="num_documento" id="num-documento" class="form-control" data-toggle="tooltip"
-                    data-placement="left" title="Completar con ceros a la izquierda si es necesario" value=""
-                    spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off">
+                <input type="text" name="asociado[num_documento]" id="num-documento" class="form-control"
+                    data-toggle="tooltip" data-placement="left"
+                    title="Completar con ceros a la izquierda si es necesario" value="" spellcheck="false"
+                    autocomplete="off" autocorrect="off" autocapitalize="off">
                 <div class="invalid-feedback"></div>
             </div>
 
@@ -48,46 +54,59 @@
             <div class="form-group">
                 <!-- style="background-color: #fff;opacity: 1;" -->
                 <label for="fecha-nacimiento">Fecha de nacimiento (dd/mm/aaaa) *</label>
-                <input type="text" name="fecha_nacimiento" id="fecha-nacimiento" class="form-control datepicker"
-                    value="" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off">
+                <input type="text" name="asociado[fecha_nacimiento]" id="fecha-nacimiento"
+                    class="form-control datepicker" value="" spellcheck="false" autocomplete="off" autocorrect="off"
+                    autocapitalize="off" style="background-color: inherit;">
                 <div class="invalid-feedback"></div>
             </div>
 
-            <!-- Fecha de nacimiento -->
+            <!-- Fecha de nacimiento select para día, mes, año -->
             <div class="form-group">
                 <label>Fecha de nacimiento *</label>
 
                 <div class="form-row">
-
+                    <!-- Día del mes, 2 dígitos sin ceros iniciales: 'j' => 1 a 31 -->
                     <div class="col-md-4">
-                        <select name="birthday_day" id="birthday-day"
+                        <select name="asociado[birthday_day]" id="birthday-day"
                             class="custom-select <?= isset( $errors['fecha_nacimiento'] ) ? 'is-invalid' : ''; ?>">
-                            <option value="0" disabled>Día</option>
+                            <option value="0">Día</option>
                             <?php for($dia = 1; $dia <= 31; $dia++): ?>
-                            <option value="<?= $dia; ?>"><?= $dia; ?></option>
+                            <option value="<?= $dia; ?>"
+                                <?php if ($asociado->getFechaNacimiento() && $dia == $asociado->getFechaNacimiento()->format('j')): ?>
+                                selected
+                                <?php endif; ?>
+                                ><?= $dia; ?></option>
                             <?php endfor; ?>
                         </select>
                         <div class="invalid-feedback"><?php echo $errors['fecha_nacimiento'] ?? ''; ?></div>
                     </div>
+                    <!-- Representación numérica de un mes, sin ceros iniciales: 'n' => 1 a 12 -->
                     <div class="col-md-4">
-                        <select name="birthday_month" id="birthday-month"
+                        <select name="asociado[birthday_month]" id="birthday-month"
                             class="custom-select <?= isset( $errors['fecha_nacimiento'] ) ? 'is-invalid' : ''; ?>">
-                            <option value="0" disabled>Mes</option>
+                            <option value="0">Mes</option>
                             <?php
                             $meses = [1 => 'ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
                             for($mes = 1; $mes <= 12; $mes++): ?>
-                            <option value="<?= $mes; ?>"><?= $meses[$mes]; ?></option>
+                            <option value="<?= $mes; ?>"
+                            <?php if ($asociado->getFechaNacimiento() && $mes == $asociado->getFechaNacimiento()->format('n')): ?>selected
+                            <?php endif; ?>
+                            ><?= $meses[$mes]; ?></option>
                             <?php endfor; ?>
                         </select>
                     </div>
+                    <!-- Una representación numérica completa de un año, 4 dígitos: 'Y' => ejm: 1999 o 2003 -->
                     <div class="col-md-4">
-                        <select name="birthday_year" id="birthday-year"
+                        <select name="asociado[birthday_year]" id="birthday-year"
                             class="custom-select <?= isset( $errors['fecha_nacimiento'] ) ? 'is-invalid' : ''; ?>">
-                            <option value="0" disabled>Año</option>
+                            <option value="0">Año</option>
                             <?php
                             $anioActual = date('Y');
                             for($anio = $anioActual; $anio >= 1905; $anio--): ?>
-                            <option value="<?= $anio; ?>"><?= $anio; ?></option>
+                            <option value="<?= $anio; ?>"
+                            <?php if ($asociado->getFechaNacimiento() && $anio == $asociado->getFechaNacimiento()->format('Y')): ?>
+                                selected <?php endif; ?>
+                            ><?= $anio; ?></option>
                             <?php endfor; ?>
                         </select>
                     </div>
@@ -97,19 +116,24 @@
 
             </div>
 
+            <!-- Número de cuil -->
             <div class="form-group">
                 <label for="num-cuil">Número de cuil *</label>
-                <a class="float-right" href="http://www0.unsl.edu.ar/~jolguin/cuit.php" target="_blank">Cálculo de
+                <a href="http://www0.unsl.edu.ar/~jolguin/cuit.php" target="_blank" style="float: right;
+                color: #838E95;
+                font-size: 12px;
+                margin-top: .3rem;">Cálculo de
                     CUIT/CUIL</a>
-                <input type="text" name="num_cuil" id="num-cuil" class="form-control" data-toggle="tooltip"
+                <input type="text" name="asociado[num_cuil]" id="num-cuil" class="form-control" data-toggle="tooltip"
                     data-placement="left" title="Sin guiones, puntos, espacios u otros símbolos" value=""
                     spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off">
                 <div class="invalid-feedback"></div>
             </div>
 
+            <!-- Condición de ingreso -->
             <div class="form-group">
                 <label for="condicion-ingreso">Condición de ingreso *</label>
-                <select name="condicion_ingreso" id="condicion-ingreso" class="custom-select">
+                <select name="asociado[condicion_ingreso]" id="condicion-ingreso" class="custom-select">
                     <option value="0">- Seleccionar -</option>
                     <option value="ACTIVO">ACTIVO</option>
                     <option value="ADHERENTE">ADHERENTE</option>
@@ -118,45 +142,50 @@
                 <div class="invalid-feedback"></div>
             </div>
 
+            <!-- Correo electrónico -->
             <div class="form-group">
                 <label for="email">Correo electrónico</label>
-                <input type="email" name="email" id="email" class="form-control" value="" spellcheck="false"
+                <input type="email" name="asociado[email]" id="email" class="form-control" value="" spellcheck="false"
                     autocomplete="off" autocorrect="off" autocapitalize="off">
                 <div class="invalid-feedback"></div>
             </div>
 
+            <!-- Teléfono móvil -->
             <div class="form-group">
                 <label for="telefono-movil">Teléfono móvil *</label>
-                <input type="text" name="telefono_movil" id="telefono-movil" class="form-control" value=""
+                <input type="text" name="asociado[telefono_movil]" id="telefono-movil" class="form-control" value=""
                     data-toggle="tooltip" data-placement="left"
                     title="Ingresá tu número de celular con código de área, sin espacios, puntos u otros símbolos."
                     spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off">
                 <div class="invalid-feedback"></div>
             </div>
 
+            <!-- Teléfono de línea -->
             <div class="form-group">
                 <label for="telefono-linea">Teléfono de línea</label>
-                <input type="text" name="telefono_linea" id="telefono-linea" class="form-control" value=""
+                <input type="text" name="asociado[telefono_linea]" id="telefono-linea" class="form-control" value=""
                     data-toggle="tooltip" data-placement="left"
                     title="Ingresá tu número de teléfono con código de área, sin espacios, puntos u otros símbolos."
                     spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off">
                 <div class="invalid-feedback"></div>
             </div>
 
+            <!-- Sexo -->
             <div class="form-group">
                 <label for="sexo">Sexo *</label>
                 <div class="custom-control custom-radio">
-                    <input type="radio" class="custom-control-input" id="femenino" name="sexo" value="F">
+                    <input type="radio" class="custom-control-input" id="femenino" name="asociado[sexo]" value="F">
                     <label class="custom-control-label" for="femenino" style="font-weight: normal;">Femenino</label>
                 </div>
                 <div class="custom-control custom-radio">
-                    <input type="radio" class="custom-control-input" id="masculino" name="sexo" value="M">
+                    <input type="radio" class="custom-control-input" id="masculino" name="asociado[sexo]" value="M">
                     <label class="custom-control-label" for="masculino" style="font-weight: normal;">Masculino</label>
                     <div class="invalid-feedback"></div>
                 </div>
             </div>
         </fieldset>
 
+        <!-- Línea divisoria -->
         <hr class="mb-4">
 
         <!-- Domicilio -->
@@ -164,44 +193,51 @@
             <legend class="mb-3">Datos del domicilio</legend>
             <!-- <p>Complete los campos que se correspondan con su domicilio.</p> -->
 
+            <!-- Calle del domicilio -->
             <div class="form-group">
                 <label for="calle">Calle</label>
-                <input type="text" name="calle" id="calle" class="form-control">
+                <input type="text" name="domicilio[calle]" id="calle" class="form-control">
                 <div class="invalid-feedback"></div>
             </div>
 
             <div class="form-row">
                 <div class="col-md-4">
+                    <!-- Número de la calle -->
                     <div class="form-group">
                         <label for="numero">Número</label>
-                        <input type="text" name="numero" id="numero" class="form-control">
+                        <input type="text" name="domicilio[numero]" id="numero" class="form-control">
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
                 <div class="col-md-4">
+                    <!-- Piso del edificio -->
                     <div class="form-group">
                         <label for="piso">Piso</label>
-                        <input type="text" name="piso" id="piso" class="form-control">
+                        <input type="text" name="domicilio[piso]" id="piso" class="form-control">
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
                 <div class="col-md-4">
+                    <!-- Número, letra o ambos del departamento -->
                     <div class="form-group">
                         <label for="departamento">Departamento</label>
-                        <input type="text" name="departamento" id="departamento" class="form-control">
+                        <input type="text" name="domicilio[departamento]" id="departamento" class="form-control">
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
             </div>
 
+            <!-- Barrio donde se localiza el domicilio -->
             <div class="form-group">
                 <label for="barrio">Barrio</label>
-                <input type="text" name="barrio" id="barrio" class="form-control">
+                <input type="text" name="domicilio[barrio]" id="barrio" class="form-control">
                 <div class="invalid-feedback"></div>
             </div>
+
+            <!-- Provincia -->
             <div class="form-group">
                 <label for="provincia">Provincia *</label>
-                <select name="provincia" id="provincia" class="custom-select" aria-readonly="true">
+                <select name="domicilio[provincia]" id="provincia" class="custom-select" aria-readonly="true">
                     <option value="0">- Seleccionar -</option>
                     <option value="B">BUENOS AIRES</option>
                     <option value="K">CATAMARCA</option>
@@ -231,25 +267,24 @@
                 <div class="invalid-feedback"></div>
             </div>
 
-            <div class="form-group" id="wrapper-localidad" style="display: none;">
+            <!-- Localidad -->
+            <div class="form-group">
                 <label for="localidad">Localidad *</label>
-
-                <select name="localidad" id="localidad" class="custom-select" aria-readonly="true">
+                <select name="domicilio[localidad]" id="localidad" class="custom-select" aria-readonly="true">
                     <option value="0">- Seleccionar -</option>
                 </select>
                 <div class="invalid-feedback"></div>
-
             </div>
-
         </fieldset>
 
-        <button type="submit" class="btn btn-primary btn-lg mt-3">Guardar</button>
+        <button type="submit" class="btn btn-primary mt-3">Guardar</button>
 
     </form>
 </section>
 
 <script>
-    document.querySelector('#birthday-day').value = "<?= $birthday_day; ?>";
-    document.querySelector('#birthday-month').value = "<?= $birthday_month; ?>";
-    document.querySelector('#birthday-year').value = "<?= $birthday_year; ?>";
+    // const currentDate = new Date();
+    // document.querySelector("#birthday-day").value = "<?php ?>";
+    // document.querySelector("#birthday-month").value = currentDate.getMonth() + 1;
+    // document.querySelector("#birthday-year").value = currentDate.getFullYear();
 </script>

@@ -1,7 +1,7 @@
 'use strict';
 
-const provinciaEl = document.querySelector('#provincia');
-const localidadEl = document.querySelector('#localidad');
+const selectProvincia = document.querySelector('select#provincia');
+const selectLocalidad = document.querySelector('select#localidad');
 
 document.addEventListener('DOMContentLoaded', () => {
     initDatepicker();
@@ -9,32 +9,27 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function initChangeProvince() {
-    if (!provinciaEl && !localidadEl) {
-        return;
-    }
-
-    provinciaEl.onchange = function () {
+    if (!selectProvincia) return;
+    selectProvincia.onchange = function (e) {
+        // Si no existe el elemento select localidad, detenemos el proceso
+        if (!selectLocalidad) return;
         if (this.value === 'C') {
             reset();
             let newOption = document.createElement("option");
             newOption.value = 5001;
             newOption.text = "CIUDAD AUTONOMA DE BUENOS AIRES";
             try {
-                localidadEl.add(newOption);
+                selectLocalidad.add(newOption);
             } catch (e) {
-                localidadEl.appendChild(newOption);
+                selectLocalidad.appendChild(newOption);
             }
-            document.querySelector("#wrapper-localidad").style.display = '';
             return;
         }
-
         if (!validCharacter(this.value)) {
             reset();
             return;
         }
-
         let data = "provincia=" + encodeURIComponent(this.value);
-
         sendHttpRequest('POST', 'server_processing.php', data, loadLocalities);
     }
 }
@@ -42,14 +37,12 @@ function initChangeProvince() {
 function loadLocalities(response) {
     let newOption;
     const $fragment = document.createDocumentFragment();
-    let rows = JSON.parse(response);
-
+    let data = JSON.parse(response);
     reset();
-
-    rows.forEach(row => {
+    data.forEach(item => {
         newOption = document.createElement("option");
-        newOption.value = row.id_localidad;
-        newOption.text = `${row.nombre} (${row.codigo_postal})`;
+        newOption.value = item.id_localidad;
+        newOption.text = `${item.nombre} (${item.codigo_postal})`;
         // add the new option 
         try {
             // this will fail in DOM browsers but is needed for IE
@@ -58,17 +51,13 @@ function loadLocalities(response) {
             $fragment.appendChild(newOption);
         }
     });
-
-    localidadEl.appendChild($fragment);
-    document.querySelector("#wrapper-localidad").style.display = '';
+    selectLocalidad.appendChild($fragment);
 }
 
 function reset() {
-    localidadEl.options.length = 0;
-    localidadEl.options[0] = new Option("Seleccione una localidad");
-    localidadEl.options[0].value = 0;
-
-    document.querySelector("#wrapper-localidad").style.display = 'none';
+    selectLocalidad.options.length = 0;
+    selectLocalidad.options[0] = new Option("- Seleccionar -");
+    selectLocalidad.options[0].value = 0;
 }
 
 // https://github.com/jquery/jquery-ui/blob/master/ui/i18n/datepicker-es.js
@@ -96,6 +85,6 @@ function initDatepicker() {
             /*showWeek: true,
             weekHeader: "Sm",*/
             //yearRange: "1905:c"// or 1905:yy or 1905:new Date() or 1905:new Date().getFullYear()
-            yearRange: '1905:' + new Date().getFullYear()
+            yearRange: '1905:' + new Date().getFullYear() - 18
         });
 }

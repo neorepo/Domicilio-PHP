@@ -1,26 +1,13 @@
-*:active,*:hover,*:focus {
-    outline: none;
-    box-shadow: none !important;
-}
-
 label {
-    margin-bottom: .25rem;
     font-weight: 600;
+    font-size: 14px;
+    margin-bottom: .25rem;
 }
 
 form .material-icons {
     font-size: 22px;
 }
 
-/* .invalid-feedback {
-    display: block;
-    visibility: hidden;
-    height: 19.2px;
+.form-control:focus, .custom-select:focus {
+    border-color: #0366d6;
 }
-
-.is-invalid~.invalid-feedback,
-.is-invalid~.invalid-tooltip,
-.was-validated :invalid~.invalid-feedback,
-.was-validated :invalid~.invalid-tooltip {
-    visibility: visible;
-} */

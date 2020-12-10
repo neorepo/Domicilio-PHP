@@ -11,6 +11,7 @@ function validId(id, min, max) {
 
 // Validamos el caracter que forma parte del código 33166-2
 function validCharacter(c) {
+    // Letra mayúsculas no minúsculas
     let re = /^[BKHUXWEPYLFMNQRAJDZSGVT]{1}$/; //No incluidas => C,I,Ñ,O
     return re.test(c);
     /*let arr = ['B', 'K', 'H', 'U', 'X', 'W', 'E', 'P', 'Y', 'L', 'F', 'M', 'N', 'Q', 'R', 'A', 'J', 'D', 'Z', 'S', 'G', 'V', 'T'];

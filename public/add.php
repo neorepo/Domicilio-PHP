@@ -12,43 +12,82 @@ require_once '../clases/Provincia.php';
 require_once '../clases/Localidad.php';
 require_once '../clases/Domicilio.php';
 
+require_once '../clases/Persona.php';
+require_once '../clases/Asociado.php';
+
 require_once '../dao/ProvinciaDao.php';
 require_once '../dao/LocalidadDao.php';
 require_once '../dao/DomicilioDao.php';
 
 $domicilio = null;
 
+$now = new DateTime();
+$asociado = new Asociado();
+$asociado->setFechaNacimiento($now);
+
 $errors = [];
 
-$birthday_year = date('Y');
-$birthday_month = date('n');
-$birthday_day = date('j');
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
+    echo 'Datos contenidos en el array $_POST';
     echo '<pre>';
     print_r($_POST);
     echo '</pre>';
-    
-    $birthday_day = $_POST['birthday_day'];
-    $birthday_month = $_POST['birthday_month'];
-    $birthday_year = $_POST['birthday_year'];
 
-    if( validarFecha($birthday_day, $birthday_month, $birthday_year) ) {
-        $birth_date = $birthday_year . '-' . $birthday_month . '-' . $birthday_day;
-        echo 'Fecha de nacimiento: ' . $birth_date . '<br>';
-        echo 'Fecha actual: ' . date('Y-n-j') . '<br>';
-        echo 'Edad: ' . Utils::calculateAge($birth_date) . '<br>';
-    } else {
-        $errors['fecha_nacimiento'] = 'La fecha seleccionada no es válida.';
+    $data = [
+        'apellido' => $_POST['asociado']['apellido'],
+        'nombre' => $_POST['asociado']['nombre'],
+        'tipo_documento' => $_POST['asociado']['tipo_documento'],
+        'num_documento' => $_POST['asociado']['num_documento'],
+        'fecha_nacimiento' => $_POST['asociado']['fecha_nacimiento'],
+        'dateOfBirth' => $_POST['asociado']['birthday_year'] . '-' . $_POST['asociado']['birthday_month'] . '-' . $_POST['asociado']['birthday_day'],
+        'num_cuil' => $_POST['asociado']['num_cuil'],
+        'condicion_ingreso' => $_POST['asociado']['condicion_ingreso'],
+        'email' => $_POST['asociado']['email'],
+        'telefono_movil' => $_POST['asociado']['telefono_movil'],
+        'telefono_linea' => $_POST['asociado']['telefono_linea'],
+        'sexo' => $_POST['asociado']['sexo'] ?? null,
+        // Datos del docmicilio
+        'calle' => $_POST['domicilio']['calle'],
+        'numero' => $_POST['domicilio']['numero'],
+        'piso' => $_POST['domicilio']['piso'],
+        'departamento' => $_POST['domicilio']['departamento'],
+        'barrio' => $_POST['domicilio']['barrio'],
+        'provincia' => $_POST['domicilio']['provincia'],
+        'localidad' => $_POST['domicilio']['localidad'],
+    ];
+
+    echo 'Datos contenidos en el array $data.';
+    echo '<pre>';
+    print_r($data);
+    echo '</pre>';
+
+    // Asignamos el valor proveniente del formulario
+    if (array_key_exists('dateOfBirth', $data)) {
+        /**
+         * Si la fecha no es válida, por ejm: '2011-2-29' DateTime setea la fecha a: 2011-03-01.
+         * DateTime entiende que '2011-2-29' es en realidad '2011-3-1' el primer día del siguiente mes.
+         */
+        if ( !Utils::validateDate($data['dateOfBirth']) ) {
+            $errors['fecha_nacimiento'] = 'La fecha de nacimiento no es válida.';
+        } else {
+            $dateOfBirth = DateTime::createFromFormat('Y-n-j', $data['dateOfBirth'] );
+            if ($dateOfBirth) {
+                $asociado->setFechaNacimiento($dateOfBirth);
+            }
+        }
     }
-    
-    $properties = $_POST;
+
+    echo 'La fecha seteada del objeto es: ' . $asociado->getFechaNacimiento()->format('Y-n-j');
+
+    // Validamos que la fecha sea válida.
+    // if ( !Utils::validateDate($asociado->getFechaNacimiento()) ) {
+    //     $errors['fecha_nacimiento'] = 'La fecha de nacimiento no es válida.';
+    // }
 
     $domicilio = new Domicilio();
     // Dao
     $domicilioDao = new DomicilioDao();
-    $domicilioDao->map($domicilio, $properties);
+    $domicilioDao->map($domicilio, $data);
     // Le pasamos el objeto domicilio creado anteriormente, y esperamos la misma referencia de objeto
     // $domicilio = $domicilioDao->insert($domicilio);
 
@@ -67,7 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 // var_dump($countries);
 // $template = '../templates/xmlhttprequest.html';
-$template = '../templates/asociado/registro.html';
+$template = '../templates/asociado/registro.phtml';
 
 require_once '../templates/base.html';
 
@@ -94,15 +133,11 @@ function validarFecha($day, $month, $year) {
         preg_match('/^[0-9]{4}$/', $year)
     ) {
         $valid_day = $valid_month = $valid_year = false;
-        if ($day >= 1 && $day <= 31) {
-            $valid_day = true;
-        }
-        if ($month >= 1 && $month <= 12) {
-            $valid_month = true;
-        }
-        if ($year >= 1905 && $year <= date('Y')) {
-            $valid_year = true;
-        }
+
+        if ($day >= 1 && $day <= 31) $valid_day = true;
+        if ($month >= 1 && $month <= 12) $valid_month = true;
+        if ($year >= 1905 && $year <= date('Y')) $valid_year = true;
+
         if ($valid_day && $valid_month && $valid_year) {
             if ($day == 29 && $month == 2) {
                 return isLeapYear($year);

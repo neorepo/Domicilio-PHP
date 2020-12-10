@@ -74,4 +74,18 @@ class Utils {
         }
         return $diff->format('%y');
     }
+
+    /**
+     * Recibe un objeto DateTime 
+     */
+    public static function validateDate($date) {
+        // formato; año, mes, día => 2000-6-20
+        $parts = explode('-', $date);
+        if( !($parts[0] >= 1905 && $parts[0] <= date('Y') ) ){
+            return false;
+        }
+        // checkdate ( int $month , int $day , int $year ) : bool
+        // Returns TRUE if the date given is valid; otherwise returns FALSE.
+        return checkdate($parts[1], $parts[2], $parts[0]); 
+    }
 }
