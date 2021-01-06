@@ -1,0 +1,265 @@
+<section>
+
+    <div class="card bg-light" style="/*width: 100%;max-width: 1000px;margin: auto;*/">
+        <div class="card-body">
+
+            <!-- <div class="mb-4 text-center">
+                <h2 class="">Registro de Asociado</h2>
+            </div> -->
+
+            <h2 class="card-title mb-4">Registro de Asociado</h2>
+            <hr>
+
+            <!-- Formulario alta de ASOCIADO -->
+            <form action="" method="post">
+
+                <!-- Datos personales -->
+                <fieldset>
+
+                    <legend class="mb-3">Datos personales</legend>
+
+                    <div class="row">
+
+                        <!-- Apellido -->
+                        <div class="col-sm-4 mb-3">
+                            <label for="apellido">Apellidos *</label>
+                            <input type="text" name="asociado[apellido]" id="apellido" class="form-control " value=""
+                                spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off"
+                                maxlength="40">
+                            <div class="invalid-feedback"></div>
+                        </div>
+
+                        <!-- Nombre -->
+                        <div class="col-sm-4 mb-3">
+                            <label for="nombre">Nombres *</label>
+                            <input type="text" name="asociado[nombre]" id="nombre" class="form-control " value=""
+                                spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off"
+                                maxlength="40">
+                            <div class="invalid-feedback"></div>
+                        </div>
+
+                        <!-- Fecha de nacimiento Datepicker -->
+                        <div class="col-sm-4 mb-3">
+                            <!-- style="background-color: #fff;opacity: 1;" -->
+                            <label for="fecha-nacimiento">Fecha de nacimiento (dd/mm/aaaa) *</label>
+                            <input type="text" name="asociado[fecha_nacimiento]" id="fecha-nacimiento"
+                                class="form-control datepicker" value="" spellcheck="false" autocomplete="off"
+                                autocorrect="off" autocapitalize="off" style="background-color: #fff;">
+                            <div class="invalid-feedback"></div>
+                        </div>
+
+                        <!-- Tipo de documento -->
+                        <div class="col-sm-4 mb-3">
+                            <label for="tipo-documento">Tipo de documento *</label>
+                            <select name="asociado[tipo_documento]" id="tipo-documento" class="custom-select ">
+                                <option value="">- Seleccionar -</option>
+                                <option value="DNI">DNI (Documento Nacional de Identidad)</option>
+                                <option value="LC">LC (Libreta Cívica)</option>
+                                <option value="LE">LE (Libreta de Enrolamiento)</option>
+                                <!-- <option value="PAS">PAS (Pasaporte)</option> -->
+                            </select>
+                            <div class="invalid-feedback"></div>
+                        </div>
+
+                        <!-- Número de documento -->
+                        <div class="col-sm-4 mb-3">
+                            <label for="num-documento">Número de documento (ocho dígitos) *</label>
+                            <input type="text" name="asociado[num_documento]" id="num-documento" class="form-control "
+                                data-toggle="tooltip" data-placement="left"
+                                title="Completar con ceros a la izquierda si es necesario" value="" spellcheck="false"
+                                autocomplete="off" autocorrect="off" autocapitalize="off">
+                            <div class="invalid-feedback"></div>
+                        </div>
+
+                        <!-- Número de cuil -->
+                        <div class="col-sm-4 mb-3">
+                            <label for="num-cuil">Número de cuil *</label>
+                            <a href="http://www0.unsl.edu.ar/~jolguin/cuit.php" target="_blank" style="float: right;
+                color: #838E95;font-size: 12px;margin-top: .3rem;">Cálculo de
+                                CUIT/CUIL</a>
+                            <input type="text" name="asociado[num_cuil]" id="num-cuil" class="form-control "
+                                data-toggle="tooltip" data-placement="left"
+                                title="Sin guiones, puntos, espacios u otros símbolos" value="" spellcheck="false"
+                                autocomplete="off" autocorrect="off" autocapitalize="off">
+                            <div class="invalid-feedback"></div>
+                        </div>
+
+                        <!-- Correo electrónico -->
+                        <div class="col-sm-4 mb-3">
+                            <label for="email">Correo electrónico</label>
+                            <input type="email" name="asociado[email]" id="email" class="form-control " value=""
+                                spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off">
+                            <div class="invalid-feedback"></div>
+                        </div>
+
+                        <!-- Teléfono móvil -->
+                        <div class="col-sm-3 mb-3">
+                            <label for="telefono-movil">Teléfono móvil *</label>
+                            <input type="text" name="asociado[telefono_movil]" id="telefono-movil" class="form-control "
+                                value="" data-toggle="tooltip" data-placement="left"
+                                title="Ingresá tu número de celular con código de área, sin espacios, puntos u otros símbolos."
+                                spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off">
+                            <div class="invalid-feedback"></div>
+                        </div>
+
+                        <!-- Teléfono de línea -->
+                        <div class="col-sm-3 mb-3">
+                            <label for="telefono-linea">Teléfono de línea</label>
+                            <input type="text" name="asociado[telefono_linea]" id="telefono-linea" class="form-control "
+                                value="" data-toggle="tooltip" data-placement="left"
+                                title="Ingresá tu número de teléfono con código de área, sin espacios, puntos u otros símbolos."
+                                spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off">
+                            <div class="invalid-feedback"></div>
+                        </div>
+
+                        <!-- Condición de ingreso -->
+                        <div class="col-sm-3 mb-3">
+                            <label for="condicion-ingreso">Condición de ingreso *</label>
+                            <select name="asociado[condicion_ingreso]" id="condicion-ingreso" class="custom-select ">
+                                <option value="">- Seleccionar -</option>
+                                <option value="ACTIVO">ACTIVO</option>
+                                <option value="ADHERENTE">ADHERENTE</option>
+                                <option value="JUBILADO">JUBILADO</option>
+                            </select>
+                            <div class="invalid-feedback"></div>
+                        </div>
+
+                        <!-- Sexo -->
+                        <div class="col-sm-2 mb-3">
+                            <label for="sexo">Sexo *</label>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" class="custom-control-input" id="femenino" name="asociado[sexo]"
+                                    value="F">
+                                <label class="custom-control-label" for="femenino"
+                                    style="font-weight: normal;">Femenino</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" class="custom-control-input" id="masculino" name="asociado[sexo]"
+                                    value="M">
+                                <label class="custom-control-label" for="masculino"
+                                    style="font-weight: normal;">Masculino</label>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </fieldset>
+
+                <!-- Línea divisoria -->
+                <hr class="mb-4">
+
+                <!-- Domicilio -->
+                <fieldset>
+
+                    <legend class="mb-3">Datos del domicilio</legend>
+
+                    <div class="row">
+
+                        <!-- Calle del domicilio -->
+                        <div class="col-sm-5 mb-3">
+                            <label for="calle">Calle</label>
+                            <input type="text" name="domicilio[calle]" id="calle" class="form-control ">
+                            <div class="invalid-feedback"></div>
+                        </div>
+
+                        <!-- Número de la calle -->
+                        <div class="col-sm-2 mb-3">
+                            <label for="numero">Número</label>
+                            <input type="text" name="domicilio[numero]" id="numero" class="form-control ">
+                            <div class="invalid-feedback"></div>
+                        </div>
+
+                        <!-- Piso del edificio o inmueble -->
+                        <div class="col-sm-2 mb-3">
+                            <label for="piso">Piso</label>
+                            <input type="text" name="domicilio[piso]" id="piso" class="form-control ">
+                            <div class="invalid-feedback"></div>
+                        </div>
+
+                        <!-- Número, letra o ambos del departamento -->
+                        <div class="col-sm-2 mb-3">
+                            <label for="departamento">Dpto</label>
+                            <input type="text" name="domicilio[departamento]" id="departamento" class="form-control ">
+                            <div class="invalid-feedback"></div>
+                        </div>
+
+                        <!-- Nombre del barrio -->
+                        <div class="col-sm-5 mb-3">
+                            <label for="barrio">Barrio</label>
+                            <input type="text" name="domicilio[barrio]" id="barrio" class="form-control ">
+                            <div class="invalid-feedback"></div>
+                        </div>
+
+                        <!-- Piso del edificio o inmueble -->
+                        <div class="col-sm-2 mb-3">
+                            <label for="manzana">Manzana</label>
+                            <input type="text" name="domicilio[manzana]" id="manzana" class="form-control ">
+                            <div class="invalid-feedback"></div>
+                        </div>
+
+                        <!-- Número de la casa o lote -->
+                        <div class="col-sm-2 mb-3">
+                            <label for="casa-lote">Casa/Lote</label>
+                            <input type="text" name="domicilio[casa_lote]" id="casa-lote" class="form-control ">
+                            <div class="invalid-feedback"></div>
+                        </div>
+
+                        <!-- Provincia -->
+                        <div class="col-sm-5 mb-3">
+                            <label for="provincia">Provincia *</label>
+                            <select name="domicilio[provincia]" id="provincia" class="custom-select ">
+                                <option value="">- Seleccionar -</option>
+                                <option value="B">BUENOS AIRES</option>
+                                <option value="K">CATAMARCA</option>
+                                <option value="H">CHACO</option>
+                                <option value="U">CHUBUT</option>
+                                <option value="C">CIUDAD AUTONOMA DE BUENOS AIRES</option>
+                                <option value="X">CORDOBA</option>
+                                <option value="W">CORRIENTES</option>
+                                <option value="E">ENTRE RIOS</option>
+                                <option value="P">FORMOSA</option>
+                                <option value="Y">JUJUY</option>
+                                <option value="L">LA PAMPA</option>
+                                <option value="F">LA RIOJA</option>
+                                <option value="M">MENDOZA</option>
+                                <option value="N">MISIONES</option>
+                                <option value="Q">NEUQUEN</option>
+                                <option value="R">RIO NEGRO</option>
+                                <option value="A">SALTA</option>
+                                <option value="J">SAN JUAN</option>
+                                <option value="D">SAN LUIS</option>
+                                <option value="Z">SANTA CRUZ</option>
+                                <option value="S">SANTA FE</option>
+                                <option value="G">SANTIAGO DEL ESTERO</option>
+                                <option value="V">TIERRA DEL FUEGO</option>
+                                <option value="T">TUCUMAN</option>
+                            </select>
+                            <div class="invalid-feedback"></div>
+                        </div>
+
+                        <!-- Localidad -->
+                        <div class="col-sm-5 mb-3">
+                            <label for="localidad">Localidad *</label>
+                            <select name="domicilio[localidad]" id="localidad" class="custom-select ">
+                                <option value="">- Seleccionar -</option>
+                            </select>
+                            <div class="invalid-feedback"></div>
+                        </div>
+
+                    </div>
+                </fieldset>
+
+                <button type="submit" class="btn btn-primary btn-lg mt-3">Guardar</button>
+
+            </form>
+
+        </div>
+    </div>
+</section>
+
+<script>
+    // const currentDate = new Date();
+    // document.querySelector("#birthday-day").value = "<?php ?>";
+    // document.querySelector("#birthday-month").value = currentDate.getMonth() + 1;
+    // document.querySelector("#birthday-year").value = currentDate.getFullYear();
+</script>

@@ -2,9 +2,7 @@
 
 date_default_timezone_set('AMERICA/ARGENTINA/BUENOS_AIRES');
 
-// $countries = getAllCoUntries();
 
-// var_dump($countries);
 
 /**
  * La siguiente URL
@@ -13,6 +11,16 @@ date_default_timezone_set('AMERICA/ARGENTINA/BUENOS_AIRES');
  * echo $_SERVER['PATH_INFO']; => /associate/edit/3
  */
 
-$template = '../templates/pages/home.html';
+// $template = '../templates/pages/home.html';
 
+// require_once '../templates/base.html';
+
+require_once '../config/Config.php';
+require_once '../dao/Db.php';
+var_dump( Db::query("SELECT * FROM sqlite_sequence;") );
+$countries = getAllCountries();
+$template = '../templates/xmlhttprequest.html';
 require_once '../templates/base.html';
+function getAllCountries() {
+    return Db::query('SELECT * FROM pais;');
+}

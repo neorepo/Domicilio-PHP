@@ -23,7 +23,9 @@ try {
     // begin the transaction
     $conn->beginTransaction();
 
-    foreach (json_decode($json, true) as $key => $value) {
+    $jsonData = json_decode($json, true);
+    
+    foreach ($jsonData as $key => $value) {
         $id = $value['id'];
         $nombre = $value['nombre'];
         $cp = $value['cp'];

@@ -45,12 +45,16 @@
                     <div class="input-group-prepend">
                         <label class="input-group-text" for="id-pais"><i class="material-icons">flag</i></label>
                     </div>
+
                     <select class="custom-select" id="id-pais">
-                        <option value="0">Seleccione un país</option>
+                        <option value="">- Seleccione un país -</option>
                         <?php foreach($countries as $pais): ?>
-                        <option value="<?= $pais['id_pais']; ?>"><?= $pais['nombre']; ?></option>
+                        <option value="<?= $pais['id_pais']; ?>">
+                            <?= $pais['nombre']; ?>
+                        </option>
                         <?php endforeach; ?>
                     </select>
+
                 </div>
 
                 <!-- Select Provincias -->
@@ -59,8 +63,9 @@
                         <label class="input-group-text" for="id-provincia"><i
                                 class="material-icons">my_location</i></label>
                     </div>
+
                     <select class="custom-select" id="id-provincia">
-                        <option value="0">Seleccione una provincia</option>
+                        <option value="">- Seleccione una provincia -</option>
                         <option value="1">BUENOS AIRES</option>
                         <option value="2">CATAMARCA</option>
                         <option value="3">CHACO</option>
@@ -86,6 +91,7 @@
                         <option value="23">TIERRA DEL FUEGO</option>
                         <option value="24">TUCUMAN</option>
                     </select>
+
                 </div>
 
                 <!-- Select Localidades -->
@@ -94,9 +100,11 @@
                         <label class="input-group-text" for="id-localidad"><i
                                 class="material-icons">location_city</i></label>
                     </div>
+
                     <select class="custom-select" id="id-localidad">
-                        <option value="0">Seleccione una localidad</option>
+                        <option value="">- Seleccione una localidad -</option>
                     </select>
+
                 </div>
 
                 <button class="btn btn-block btn-primary">Registrar</button>
@@ -115,113 +123,60 @@
         console.log('Init anonymous function.');
     })();
 
-    const paisEl = document.querySelector('#id-pais');
-    const provinciaEl = document.querySelector('#id-provincia');
-    const localidadEl = document.querySelector('#id-localidad');
+    const selectPais = document.querySelector('select#id-pais');
+    const selectProvincia = document.querySelector('select#id-provincia');
+    const selectLocalidad = document.querySelector('select#id-localidad');
 
     document.addEventListener('DOMContentLoaded', () => {
-        initChangeCountry()
-        initChangeProvince();
+        initOnChangeCountry()
+        initOnChangeProvince();
     });
 
-    function initChangeCountry() {
-
-        if (!paisEl) return;
-
-        paisEl.onchange = function () {
-            if (!validId(this.value, 1, 249) || this.value != 12) {
-                document.querySelector("#id-provincia")[0].selected = true;
-                document.querySelector("#wrapper-provincia").style.display = 'none';
-                reset();
-                return;
-            }
-
-            document.querySelector("#wrapper-provincia").style.display = '';
-        }
+    const initOnChangeCountry = () => {
+        if (!selectPais) return;
+        selectPais.onchange = function (e) { return handleChangeCountry(this, e); }
     }
 
-    function loadCountries(response) {
-        let newOption;
-        const $fragment = document.createDocumentFragment();
-        let rows = JSON.parse(response);
-        rows.unshift({ id_pais: "0", nombre: "Seleccione un país" });
-        rows.forEach(row => {
-            newOption = document.createElement("option");
-            newOption.value = row.id_pais;
-            newOption.text = `${row.nombre}`;
-            // add the new option 
-            try {
-                // this will fail in DOM browsers but is needed for IE
-                $fragment.add(newOption);
-            } catch (e) {
-                $fragment.appendChild(newOption);
-            }
-        });
-
-        paisEl.appendChild($fragment);
-    }
-
-    function initChangeProvince() {
-        if (!provinciaEl && !localidadEl) {
-            return;
-        }
-
-        provinciaEl.onchange = () => {
-            if (provinciaEl.value === '5') {
-                reset();
-                let newOption = document.createElement("option");
-                newOption.value = 5001;
-                newOption.text = "CIUDAD AUTONOMA DE BUENOS AIRES";
-                try {
-                    localidadEl.add(newOption);
-                } catch (e) {
-                    localidadEl.appendChild(newOption);
-                }
-                document.querySelector("#wrapper-localidad").style.display = '';
-                return;
-            }
-
-            if (!validId(provinciaEl.value, 1, 24)) {
-                reset();
-                return;
-            }
-
-            let data = "provincia=" + encodeURIComponent(provinciaEl.value);
-
-            sendHttpRequest('POST', 'process_request.php', data, loadLocalities);
-        }
-    }
-
-    function loadLocalities(response) {
-        let newOption;
-        const $fragment = document.createDocumentFragment();
-        let rows = JSON.parse(response);
-
-        reset();
-
-        rows.forEach(row => {
-            newOption = document.createElement("option");
-            newOption.value = row.id_localidad;
-            newOption.text = `${row.nombre} (${row.codigo_postal})`;
-            // add the new option 
-            try {
-                // this will fail in DOM browsers but is needed for IE
-                $fragment.add(newOption);
-            } catch (e) {
-                $fragment.appendChild(newOption);
-            }
-        });
-
-        localidadEl.appendChild($fragment);
-        document.querySelector("#wrapper-localidad").style.display = '';
-    }
-
-    function reset() {
-        localidadEl.options.length = 0;
-        localidadEl.options[0] = new Option("Seleccione una localidad");
-        localidadEl.options[0].value = 0;
-
+    const handleChangeCountry = (objSelect, objEvent) => {
+        if (!selectProvincia) return;
+        selectProvincia.disabled = true;
+        document.querySelector("#wrapper-provincia").style.display = 'none';
         document.querySelector("#wrapper-localidad").style.display = 'none';
+        removeOptions(selectLocalidad);
+        if (objSelect.selectedIndex > 0) {
+            selectProvincia.disabled = false;
+            const value = objSelect.value;
+            if (!isValidId(value, 1, 249)) return;
+            document.querySelector("#wrapper-provincia").style.display = '';
+            selectProvincia.selectedIndex = 0; // selectProvincia.options[0].selected = true;
+        }
     }
 
+    const initOnChangeProvince = () => {
+        if (!selectProvincia) return;
+        selectProvincia.onchange = function (e) { return handleChangeProvince(this, e); }
+    }
+
+    const handleChangeProvince = (objSelect, objEvent) => {
+        if (!selectLocalidad) return;
+        selectLocalidad.disabled = true;
+        removeOptions(selectLocalidad);
+        document.querySelector("#wrapper-localidad").style.display = '';
+        if (objSelect.selectedIndex > 0) {
+            selectLocalidad.disabled = false;
+            const value = objSelect.value;
+            if (!isValidId(value, 1, 24)) return;
+            if (value === '5') {
+                createOptions(selectLocalidad, [{ id_localidad: "5001", nombre: "CIUDAD AUTONOMA DE BUENOS AIRES", codigo_postal: "" }]);
+            } else {
+                const formData = "provincia=" + encodeURIComponent(value);
+                sendHttpRequest('POST', 'process_request.php', formData, loadLocalities);
+            }
+        }
+    }
+
+    const loadLocalities = (response) => {
+        const data = JSON.parse(response);
+        createOptions(selectLocalidad, data);
+    }
 </script>

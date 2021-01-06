@@ -1,64 +1,16 @@
 'use strict';
 
-const selectProvincia = document.querySelector('select#provincia');
-const selectLocalidad = document.querySelector('select#localidad');
+const selectP = document.querySelector('select#provincia');
+const selectL = document.querySelector('select#localidad');
 
 document.addEventListener('DOMContentLoaded', () => {
     initDatepicker();
-    initChangeProvince();
+    initSelect2();
+    initChangeProvincia();
+
+    // Seteamos el estado inicial del select de localidades a deshabilitado
+    if (selectL) selectL.disabled = true;
 });
-
-function initChangeProvince() {
-    if (!selectProvincia) return;
-    selectProvincia.onchange = function (e) {
-        // Si no existe el elemento select localidad, detenemos el proceso
-        if (!selectLocalidad) return;
-        if (this.value === 'C') {
-            reset();
-            let newOption = document.createElement("option");
-            newOption.value = 5001;
-            newOption.text = "CIUDAD AUTONOMA DE BUENOS AIRES";
-            try {
-                selectLocalidad.add(newOption);
-            } catch (e) {
-                selectLocalidad.appendChild(newOption);
-            }
-            return;
-        }
-        if (!validCharacter(this.value)) {
-            reset();
-            return;
-        }
-        let data = "provincia=" + encodeURIComponent(this.value);
-        sendHttpRequest('POST', 'server_processing.php', data, loadLocalities);
-    }
-}
-
-function loadLocalities(response) {
-    let newOption;
-    const $fragment = document.createDocumentFragment();
-    let data = JSON.parse(response);
-    reset();
-    data.forEach(item => {
-        newOption = document.createElement("option");
-        newOption.value = item.id_localidad;
-        newOption.text = `${item.nombre} (${item.codigo_postal})`;
-        // add the new option 
-        try {
-            // this will fail in DOM browsers but is needed for IE
-            $fragment.add(newOption);
-        } catch (e) {
-            $fragment.appendChild(newOption);
-        }
-    });
-    selectLocalidad.appendChild($fragment);
-}
-
-function reset() {
-    selectLocalidad.options.length = 0;
-    selectLocalidad.options[0] = new Option("- Seleccionar -");
-    selectLocalidad.options[0].value = 0;
-}
 
 // https://github.com/jquery/jquery-ui/blob/master/ui/i18n/datepicker-es.js
 function initDatepicker() {
@@ -85,6 +37,83 @@ function initDatepicker() {
             /*showWeek: true,
             weekHeader: "Sm",*/
             //yearRange: "1905:c"// or 1905:yy or 1905:new Date() or 1905:new Date().getFullYear()
-            yearRange: '1905:' + new Date().getFullYear() - 18
+            yearRange: '1905:' + (new Date().getFullYear() - 18)
         });
+}
+
+// Inicialización Select2
+function initSelect2() {
+    $('#provincia').select2({
+        theme: 'bootstrap4',
+        language: {
+            noResults: function () { return "No se encontraron resultados" }
+        }
+    });
+    $('#localidad').select2({
+        // placeholder: '- Seleccione una opción -',
+        // allowClear: true,
+        theme: 'bootstrap4',
+        minimumInputLength: 3,
+        language: {
+            inputTooShort: function (e) {
+                var n = e.minimum - e.input.length, r = "Por favor, introduzca " + n + " car"; return r += 1 == n ? "ácter" : "acteres";
+            },
+            noResults: function () { return "No se encontraron resultados"; }
+        }
+    });
+}
+
+function initChangeProvincia() {
+    if (selectP) {
+        selectP.onchange = function (e) { return handleChangeProvincia(this, e); }
+    }
+}
+
+function handleChangeProvincia(objSelect, objEvent) {
+    if (!selectL) return;
+    selectL.disabled = true;
+    // Si el select de localidades contiene opciones, las removemos.
+    removeOptions(selectL);
+    if (objSelect.selectedIndex > 0) {
+        selectL.disabled = false;
+        const value = objSelect.value;
+        // Si no es un carácter válido
+        if (!validCharacter(value)) return;
+        // Si el carácter es de la CABA
+        if (value === 'C') {
+            createOptions(selectL, [{ id_localidad: "5001", nombre: "CIUDAD AUTONOMA DE BUENOS AIRES", codigo_postal: "" }]);
+        } else {
+            const formData = "provincia=" + encodeURIComponent(value);
+            sendHttpRequest('POST', 'server_processing.php', formData, cargarLocalidades);
+        }
+    }
+}
+
+function cargarLocalidades(response) {
+    const data = JSON.parse(response);
+    if (!data.success) return;
+    createOptions(selectL, data.localidades);
+}
+
+function createOptions(selectObj, data) {
+    let newOpt;
+    const fragment = document.createDocumentFragment();
+    data.forEach(obj => {
+        newOpt = document.createElement("option");
+        newOpt.value = obj.id_localidad;
+        newOpt.text = `${obj.nombre} (${obj.codigo_postal})`;
+        // add the new option 
+        try {
+            // this will fail in DOM browsers but is needed for IE
+            fragment.add(newOpt);
+        } catch (e) {
+            fragment.appendChild(newOpt);
+        }
+    });
+    selectObj.appendChild(fragment);
+}
+
+function removeOptions(objSelect) {
+    let len = objSelect.options.length;
+    while (len-- > 1) objSelect.remove(1);
 }

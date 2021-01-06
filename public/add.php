@@ -52,6 +52,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         'piso' => $_POST['domicilio']['piso'],
         'departamento' => $_POST['domicilio']['departamento'],
         'barrio' => $_POST['domicilio']['barrio'],
+        'manzana' => $_POST['domicilio']['manzana'],
+        'casa_lote' => $_POST['domicilio']['casa_lote'],
         'provincia' => $_POST['domicilio']['provincia'],
         'localidad' => $_POST['domicilio']['localidad'],
     ];
@@ -102,17 +104,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // var_dump($domicilio);
 }
 
-// $countries = getAllCountries();
 
-// var_dump($countries);
-// $template = '../templates/xmlhttprequest.html';
-$template = '../templates/asociado/registro.phtml';
+$template = '../templates/asociado/registro.html';
 
 require_once '../templates/base.html';
-
-function getAllCountries() {
-    return Db::query('SELECT * FROM pais;');
-}
 
 function validate_date($day, $month, $year) {
     if( !($year >= 1905 && $year <= date('Y') ) ){

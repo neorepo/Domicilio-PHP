@@ -5,26 +5,36 @@
 require_once '../config/Config.php';
 require_once '../dao/Db.php';
 
-$cod_3166_2 = null;
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+    $codigo3166_2 = null;
+    $response = ['success' => false, 'localidades' => null];
+    $provincia = null;
+
     if(array_key_exists('provincia', $_POST)) {
-        $cod_3166_2 = 'AR-' . $_POST['provincia'];
+        $codigo3166_2 = 'AR-' . $_POST['provincia'];
     }
-    if($cod_3166_2) {
-        $provincia = getProvinciaPorCod($cod_3166_2)[0];
-        $rows = getLocalidadesPorIdProvincia($provincia['id_provincia']);
-        echo json_encode($rows);
-        exit;
+    if($codigo3166_2) {
+        $provincia = getProvinciaPorCodigo($codigo3166_2)[0];
     }
-} else {
-    header('Location: index.php');
+    if ($provincia) {
+        $response['localidades'] = getLocalidadesPorIdProvincia( (int) $provincia['id_provincia'] );
+    }
+    if ($response['localidades']) {
+        $response['success'] = true;
+    }
+
+    echo json_encode($response);
     exit;
 }
+
+header('Location: index.php');
+exit;
 
 function getLocalidadesPorIdProvincia($id_provincia) {
     return Db::query('SELECT * FROM localidad WHERE id_provincia = ? ORDER BY nombre;', $id_provincia);
 }
 
-function getProvinciaPorCod($cod_3166_2) {
-    return Db::query('SELECT id_provincia FROM provincia WHERE codigo_3166_2 = ?;', $cod_3166_2);
+function getProvinciaPorCodigo($codigo3166_2) {
+    return Db::query('SELECT id_provincia FROM provincia WHERE codigo_3166_2 = ? LIMIT 1;', $codigo3166_2);
 }

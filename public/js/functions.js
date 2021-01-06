@@ -1,31 +1,21 @@
 // Validamos que contenga un identificador válido
-function validId(id, min, max) {
-    if (get_int(id)) {
-        id = parseInt(id);
-        if (id >= min && id <= max) {
-            return true;
-        }
-    }
-    return false;
+function isValidId(id, min, max) {
+    if (!get_int(id)) return false;
+    id = parseInt(id);
+    return (id >= min && id <= max);
+}
+
+function get_int(n) {
+    if (n == null) return false;
+    // Si es un caracter numérico entero
+    return (/^[+-]?\d+$/.test(n));
 }
 
 // Validamos el caracter que forma parte del código 33166-2
 function validCharacter(c) {
-    // Letra mayúsculas no minúsculas
-    let re = /^[BKHUXWEPYLFMNQRAJDZSGVT]{1}$/; //No incluidas => C,I,Ñ,O
+    // Letras mayúsculas, no minúsculas
+    const re = /^[ABCDEFGHJKLMNPQRSTUVWXYZ]{1}$/; // No incluidas => I,Ñ,O
     return re.test(c);
-    /*let arr = ['B', 'K', 'H', 'U', 'X', 'W', 'E', 'P', 'Y', 'L', 'F', 'M', 'N', 'Q', 'R', 'A', 'J', 'D', 'Z', 'S', 'G', 'V', 'T'];
-    return arr.includes(val);*/
-}
-
-function get_int(n) {
-    if (n != null) {
-        // Si es un caracter numérico entero
-        if (/^[+-]?\d+$/.test(n)) {
-            return true;
-        }
-    }
-    return false;
 }
 
 // https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest
@@ -52,8 +42,8 @@ function sendHttpRequest(method, url, data, callback) {
 }
 
 function createCustomElement(element, textNode, attributes, children = []) {
-    let customElement = document.createElement(element);
-    let text = document.createTextNode(textNode);
+    const customElement = document.createElement(element);
+    const text = document.createTextNode(textNode);
     customElement.appendChild(text);
 
     if (children !== "undefined") {

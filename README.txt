@@ -139,10 +139,74 @@ vocales con diéresis
 INFORMACIÓN ACERCA DE LAS LOCALIDADES DE LA BASE DE DATOS
 22826 localidades, última actualización 24/09/2020 10:30
 
-
 // $a = 1;
 // $b = !!$a;
 // var_dump( ~$a ); -2
 // var_dump( $b ); true
 
 C:/xampp/htdocs/domicilio/datos/paises-utf8.csv
+
+Listado de abreviaturas utilizadas (INDEC) ejemplo manzana => manz.
+https://geoservicios.indec.gov.ar/nomenclador-vias-de-circulacion/archivos/NNVC_abreviaturas.pdf
+
+Normas generales para el uso de abreviaturas en el Instituto Geográfico Nacional
+https://www.ign.gob.ar/archivos/cartografia/normas_generales_abreviaturas.pdf
+
+Orientaciones acerca del domicilio
+https://www.santafe.gob.ar/index.php/web/content/download/248608/1307349/version/2/file/MMUVRA+-+Manual+del+Listador++2015+Final+-18+-3.pdf
+
+<!-- Fecha de nacimiento select para día, mes, año -->
+            <div class="col-sm-3 mb-3">
+                <label>Fecha de nacimiento *</label>
+
+                <div class="form-row">
+                    <!-- Día del mes, 2 dígitos sin ceros iniciales: 'j' => 1 a 31 -->
+                    <div class="col-md-4">
+                        <select name="asociado[birthday_day]" id="birthday-day"
+                            class="custom-select custom-select-lg <?= isset( $errors['fecha_nacimiento'] ) ? 'is-invalid' : ''; ?>">
+                            <option value="0">Día</option>
+                            <?php for($dia = 1; $dia <= 31; $dia++): ?>
+                            <option value="<?= $dia; ?>"
+                                <?php if ($asociado->getFechaNacimiento() && $dia == $asociado->getFechaNacimiento()->format('j')): ?>
+                                selected
+                                <?php endif; ?>
+                                ><?= $dia; ?></option>
+                            <?php endfor; ?>
+                        </select>
+                        <div class="invalid-feedback"><?php echo $errors['fecha_nacimiento'] ?? ''; ?></div>
+                    </div>
+                    <!-- Representación numérica de un mes, sin ceros iniciales: 'n' => 1 a 12 -->
+                    <div class="col-md-4">
+                        <select name="asociado[birthday_month]" id="birthday-month"
+                            class="custom-select custom-select-lg <?= isset( $errors['fecha_nacimiento'] ) ? 'is-invalid' : ''; ?>">
+                            <option value="0">Mes</option>
+                            <?php
+                            $meses = [1 => 'ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
+                            for($mes = 1; $mes <= 12; $mes++): ?>
+                            <option value="<?= $mes; ?>"
+                            <?php if ($asociado->getFechaNacimiento() && $mes == $asociado->getFechaNacimiento()->format('n')): ?>selected
+                            <?php endif; ?>
+                            ><?= $meses[$mes]; ?></option>
+                            <?php endfor; ?>
+                        </select>
+                    </div>
+                    <!-- Una representación numérica completa de un año, 4 dígitos: 'Y' => ejm: 1999 o 2003 -->
+                    <div class="col-md-4">
+                        <select name="asociado[birthday_year]" id="birthday-year"
+                            class="custom-select custom-select-lg <?= isset( $errors['fecha_nacimiento'] ) ? 'is-invalid' : ''; ?>">
+                            <option value="0">Año</option>
+                            <?php
+                            $anioActual = date('Y');
+                            for($anio = $anioActual; $anio >= 1905; $anio--): ?>
+                            <option value="<?= $anio; ?>"
+                            <?php if ($asociado->getFechaNacimiento() && $anio == $asociado->getFechaNacimiento()->format('Y')): ?>
+                                selected <?php endif; ?>
+                            ><?= $anio; ?></option>
+                            <?php endfor; ?>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- <div style="width: 100%;margin-top: .25rem;font-size: 80%;color: #dc3545;"></div> -->
+
+            </div>
