@@ -11,3 +11,11 @@ form .material-icons {
 .form-control:focus, .custom-select:focus {
     border-color: #0366d6;
 }
+
+.fs-14 {
+    font-size: 14px;
+}
+
+a {
+    text-decoration: none !important;
+}

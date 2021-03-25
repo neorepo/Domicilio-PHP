@@ -87,7 +87,7 @@ email VARCHAR(50) NULL UNIQUE o email VARCHAR(50) UNIQUE
 Entonces si no tenemos el correo electrónico, deberemos registrar el campo como NULL,
 para no generar un error de campos duplicados, ya que el campo es UNIQUE.
 
-CONSIDERACIONES ACERCA DE LA VALIDACIóN DE UN NúMERO ENTERO POSITIVO.
+CONSIDERACIONES ACERCA DE LA VALIDACIóN DE UN NÚMERO ENTERO POSITIVO.
 Antes de consultar a la base de datos se validaba que el id fuese un número entero positivo.
 por ejemplo:
 
@@ -143,8 +143,6 @@ INFORMACIÓN ACERCA DE LAS LOCALIDADES DE LA BASE DE DATOS
 // $b = !!$a;
 // var_dump( ~$a ); -2
 // var_dump( $b ); true
-
-C:/xampp/htdocs/domicilio/datos/paises-utf8.csv
 
 Listado de abreviaturas utilizadas (INDEC) ejemplo manzana => manz.
 https://geoservicios.indec.gov.ar/nomenclador-vias-de-circulacion/archivos/NNVC_abreviaturas.pdf

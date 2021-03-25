@@ -69,10 +69,12 @@
 
                     <!-- Número de cuil -->
                     <div class="mb-3">
-                        <label for="num-cuil">Número de cuil *</label>
-                        <a href="http://www0.unsl.edu.ar/~jolguin/cuit.php" target="_blank" style="float: right;
-                color: #838E95;font-size: 12px;margin-top: .3rem;">Cálculo de
-                            CUIT/CUIL</a>
+                        <div style="display: flex;align-items: center;" class="fs-14">
+                            <label for="num-cuil" style="flex: 1;">Número de cuil *</label>
+                            <!-- Enlace de restablecimiento de contraseña -->
+                            <a href="http://www0.unsl.edu.ar/~jolguin/cuit.php" target="_blank" style="margin-bottom: .25rem;">Cálculo de
+                                CUIT/CUIL</a>
+                        </div>
                         <input type="text" name="asociado[num_cuil]" id="num-cuil" class="form-control "
                             data-toggle="tooltip" data-placement="left"
                             title="Sin guiones, puntos, espacios u otros símbolos" value="" spellcheck="false"
